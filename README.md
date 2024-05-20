@@ -1,4 +1,4 @@
-## This is a project in progress. There WILL be bugs, glitches and other unexpected behavior. Considering reporting these if you can. Thanks!
+# This is a project in progress. There WILL be bugs, glitches and other unexpected behavior. Considering reporting these if you can. Thanks!
 
 <hr>
 
