@@ -41,7 +41,13 @@ This little project is still in its early stages and any contributions (no money
 4. Paste the copied JavaScript code into the URL or "Location" field of the bookmark.
 5. Save the bookmark.
 
-## Usage
+## Screenshots and Usage
+
+https://github.com/dvingerh/yt-dl-protocol/assets/8366383/7102c351-7ad0-4144-be48-7679c61c9f55
+
+![image](https://github.com/dvingerh/yt-dl-protocol/assets/8366383/7e22861a-c166-4c95-b915-40a1ba1cbe5e)
+
+
 
 ### Bookmarklet
 
@@ -65,3 +71,6 @@ Contributions are welcome! If you have suggestions or improvements, feel free to
 ## License
 
 I will be adopting the UnLicense.
+
+
+
