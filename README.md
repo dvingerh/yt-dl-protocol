@@ -1,4 +1,4 @@
-##### 😁 This is a project in progress. There WILL be bugs, glitches and other unexpected behavior. Considering reporting these if you can. Thanks! 😁
+##### This is a project in progress. There WILL be bugs, glitches and other unexpected behavior. Considering reporting these if you can.
 
 <hr>
 
@@ -46,6 +46,10 @@ This little project is still in its early stages and any contributions (no money
 https://github.com/dvingerh/yt-dl-protocol/assets/8366383/7102c351-7ad0-4144-be48-7679c61c9f55
 
 ![image](https://github.com/dvingerh/yt-dl-protocol/assets/8366383/7e22861a-c166-4c95-b915-40a1ba1cbe5e)
+
+![image](https://github.com/dvingerh/yt-dl-protocol/assets/8366383/bde6c130-2285-4815-8bbb-7367740ce840)
+
+![image](https://github.com/dvingerh/yt-dl-protocol/assets/8366383/3a0148ad-2ec7-4ae7-8280-376cbd0e053e)
 
 
 
