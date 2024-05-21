@@ -2,7 +2,7 @@
 
 <hr>
 
-## yt-dl-protocol (Download almost every video on a site from a bookmark link) for Web Browsers
+## yt-dl-protocol
 
 This repository provides a versatile Bookmarklet that allows you to quickly download media content from the current webpage URL using a custom `ytdl://` protocol (. The bookmarklet communicates with small, locally ran C# utility which relies on `youtube-dlp` to handle downloads. This utility does not run in the background, ensuring that system resources are used only when necessary.
 
