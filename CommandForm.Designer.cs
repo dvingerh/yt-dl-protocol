@@ -46,7 +46,8 @@
             this.CommandOutputTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.CommandOutputTextBox.Multiline = true;
             this.CommandOutputTextBox.Name = "CommandOutputTextBox";
-            this.CommandOutputTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.CommandOutputTextBox.ReadOnly = true;
+            this.CommandOutputTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.CommandOutputTextBox.Size = new System.Drawing.Size(752, 340);
             this.CommandOutputTextBox.TabIndex = 0;
             this.CommandOutputTextBox.WordWrap = false;
@@ -55,11 +56,11 @@
             // 
             this.EndButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.EndButton.Image = global::yt_dl_protocol.Properties.Resources.error;
-            this.EndButton.Location = new System.Drawing.Point(692, 362);
+            this.EndButton.Location = new System.Drawing.Point(647, 362);
             this.EndButton.Name = "EndButton";
-            this.EndButton.Size = new System.Drawing.Size(75, 29);
+            this.EndButton.Size = new System.Drawing.Size(120, 29);
             this.EndButton.TabIndex = 1;
-            this.EndButton.Text = "End";
+            this.EndButton.Text = "Kill Process";
             this.EndButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.EndButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.EndButton.UseVisualStyleBackColor = true;
@@ -71,14 +72,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.CommandProgressBar.Location = new System.Drawing.Point(15, 365);
             this.CommandProgressBar.Name = "CommandProgressBar";
-            this.CommandProgressBar.Size = new System.Drawing.Size(612, 23);
+            this.CommandProgressBar.Size = new System.Drawing.Size(567, 23);
             this.CommandProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.CommandProgressBar.TabIndex = 0;
             // 
             // CommandProgressLabel
             // 
             this.CommandProgressLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.CommandProgressLabel.Location = new System.Drawing.Point(633, 365);
+            this.CommandProgressLabel.Location = new System.Drawing.Point(588, 365);
             this.CommandProgressLabel.Name = "CommandProgressLabel";
             this.CommandProgressLabel.Size = new System.Drawing.Size(53, 16);
             this.CommandProgressLabel.TabIndex = 2;

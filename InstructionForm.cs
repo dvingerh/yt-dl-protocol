@@ -27,6 +27,7 @@ namespace yt_dl_protocol
         private void InstructionForm_Load(object sender, EventArgs e)
         {
             ApplySyntaxHighlighting();
+            BookmarkletRichTextBox.Text = "javascript:(function(){\r\n    var currentURL=window.location.href;\r\n    var ytdlURL='ytdl://'+currentURL;\r\n    window.open(ytdlURL,'_self');\r\n})();\r\n";
         }
 
         private void ApplySyntaxHighlighting()
@@ -64,6 +65,11 @@ namespace yt_dl_protocol
         {
             ApplySyntaxHighlighting();
 
+        }
+
+        private void BookmarkletRichTextBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            BookmarkletRichTextBox.SelectAll();
         }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.ProtocolEnabledLabel = new System.Windows.Forms.Label();
             this.ytdlPathLabel = new System.Windows.Forms.Label();
             this.YtDlDownloadPathTextBox = new System.Windows.Forms.TextBox();
@@ -41,7 +42,9 @@
             this.DownloadPathLabel = new System.Windows.Forms.Label();
             this.ProtocolStatusPictureBox = new System.Windows.Forms.PictureBox();
             this.OffGrayPictureBox = new System.Windows.Forms.PictureBox();
-            this.GuideButton = new System.Windows.Forms.Button();
+            this.BookmarkGuideButton = new System.Windows.Forms.Button();
+            this.ProtocolToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.AutoCloseCommandWindowCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.ProtocolStatusPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.OffGrayPictureBox)).BeginInit();
             this.SuspendLayout();
@@ -54,10 +57,12 @@
             this.ProtocolEnabledLabel.Size = new System.Drawing.Size(126, 20);
             this.ProtocolEnabledLabel.TabIndex = 2;
             this.ProtocolEnabledLabel.Text = "Protocol enabled:";
+            this.ProtocolToolTip.SetToolTip(this.ProtocolEnabledLabel, "You need to set up the path settings before the protocol can be registered.");
             // 
             // ytdlPathLabel
             // 
-            this.ytdlPathLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.ytdlPathLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.ytdlPathLabel.AutoSize = true;
             this.ytdlPathLabel.Location = new System.Drawing.Point(12, 65);
             this.ytdlPathLabel.Name = "ytdlPathLabel";
@@ -88,7 +93,7 @@
             this.SaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.SaveButton.Image = global::yt_dl_protocol.Properties.Resources.rules;
             this.SaveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.SaveButton.Location = new System.Drawing.Point(153, 166);
+            this.SaveButton.Location = new System.Drawing.Point(12, 205);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(125, 29);
             this.SaveButton.TabIndex = 6;
@@ -101,7 +106,7 @@
             // 
             this.UpdateButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.UpdateButton.Image = global::yt_dl_protocol.Properties.Resources.spinner;
-            this.UpdateButton.Location = new System.Drawing.Point(16, 166);
+            this.UpdateButton.Location = new System.Drawing.Point(16, 205);
             this.UpdateButton.Name = "UpdateButton";
             this.UpdateButton.Size = new System.Drawing.Size(113, 29);
             this.UpdateButton.TabIndex = 8;
@@ -109,6 +114,7 @@
             this.UpdateButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.UpdateButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.UpdateButton.UseVisualStyleBackColor = true;
+            this.UpdateButton.Visible = false;
             this.UpdateButton.Click += new System.EventHandler(this.CheckForUpdatesButton_Click);
             // 
             // UnregisterButton
@@ -156,7 +162,8 @@
             // 
             // DownloadPathLabel
             // 
-            this.DownloadPathLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.DownloadPathLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.DownloadPathLabel.AutoSize = true;
             this.DownloadPathLabel.Location = new System.Drawing.Point(12, 98);
             this.DownloadPathLabel.Name = "DownloadPathLabel";
@@ -175,51 +182,75 @@
             this.ProtocolStatusPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.ProtocolStatusPictureBox.TabIndex = 14;
             this.ProtocolStatusPictureBox.TabStop = false;
+            this.ProtocolToolTip.SetToolTip(this.ProtocolStatusPictureBox, "You need to set up the path settings before the protocol can be registered.");
+            this.ProtocolStatusPictureBox.BackgroundImageChanged += new System.EventHandler(this.ProtocolStatusPictureBox_BackgroundImageChanged);
             // 
             // OffGrayPictureBox
             // 
             this.OffGrayPictureBox.BackColor = System.Drawing.Color.WhiteSmoke;
             this.OffGrayPictureBox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.OffGrayPictureBox.Location = new System.Drawing.Point(0, 157);
+            this.OffGrayPictureBox.Location = new System.Drawing.Point(0, 196);
             this.OffGrayPictureBox.Name = "OffGrayPictureBox";
             this.OffGrayPictureBox.Size = new System.Drawing.Size(442, 50);
             this.OffGrayPictureBox.TabIndex = 15;
             this.OffGrayPictureBox.TabStop = false;
             // 
-            // GuideButton
+            // BookmarkGuideButton
             // 
-            this.GuideButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.GuideButton.Image = global::yt_dl_protocol.Properties.Resources.info;
-            this.GuideButton.Location = new System.Drawing.Point(305, 166);
-            this.GuideButton.Name = "GuideButton";
-            this.GuideButton.Size = new System.Drawing.Size(125, 29);
-            this.GuideButton.TabIndex = 17;
-            this.GuideButton.Text = "Guide";
-            this.GuideButton.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.GuideButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.GuideButton.UseVisualStyleBackColor = true;
-            this.GuideButton.Click += new System.EventHandler(this.Guide_Button_Click);
+            this.BookmarkGuideButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BookmarkGuideButton.Image = global::yt_dl_protocol.Properties.Resources.info;
+            this.BookmarkGuideButton.Location = new System.Drawing.Point(280, 205);
+            this.BookmarkGuideButton.Name = "BookmarkGuideButton";
+            this.BookmarkGuideButton.Size = new System.Drawing.Size(150, 29);
+            this.BookmarkGuideButton.TabIndex = 17;
+            this.BookmarkGuideButton.Text = "Bookmark Guide";
+            this.BookmarkGuideButton.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.BookmarkGuideButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.BookmarkGuideButton.UseVisualStyleBackColor = true;
+            this.BookmarkGuideButton.Click += new System.EventHandler(this.Guide_Button_Click);
+            // 
+            // ProtocolToolTip
+            // 
+            this.ProtocolToolTip.AutomaticDelay = 0;
+            this.ProtocolToolTip.BackColor = System.Drawing.Color.White;
+            this.ProtocolToolTip.IsBalloon = true;
+            this.ProtocolToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.ProtocolToolTip.ToolTipTitle = "Registering the protocol";
+            this.ProtocolToolTip.UseAnimation = false;
+            this.ProtocolToolTip.UseFading = false;
+            // 
+            // AutoCloseCommandWindowCheckBox
+            // 
+            this.AutoCloseCommandWindowCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.AutoCloseCommandWindowCheckBox.AutoSize = true;
+            this.AutoCloseCommandWindowCheckBox.Location = new System.Drawing.Point(16, 142);
+            this.AutoCloseCommandWindowCheckBox.Name = "AutoCloseCommandWindowCheckBox";
+            this.AutoCloseCommandWindowCheckBox.Size = new System.Drawing.Size(415, 24);
+            this.AutoCloseCommandWindowCheckBox.TabIndex = 18;
+            this.AutoCloseCommandWindowCheckBox.Text = "Automatically close the command window when finished?";
+            this.AutoCloseCommandWindowCheckBox.UseVisualStyleBackColor = true;
             // 
             // ConfigurationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(442, 207);
-            this.Controls.Add(this.GuideButton);
+            this.ClientSize = new System.Drawing.Size(442, 246);
+            this.Controls.Add(this.AutoCloseCommandWindowCheckBox);
+            this.Controls.Add(this.BookmarkGuideButton);
             this.Controls.Add(this.ProtocolStatusPictureBox);
             this.Controls.Add(this.BrowseDownloadPathButton);
             this.Controls.Add(this.DownloadPathTextBox);
             this.Controls.Add(this.DownloadPathLabel);
             this.Controls.Add(this.RegisterButton);
             this.Controls.Add(this.UnregisterButton);
-            this.Controls.Add(this.UpdateButton);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.BrowseExecutableButton);
             this.Controls.Add(this.YtDlDownloadPathTextBox);
             this.Controls.Add(this.ytdlPathLabel);
             this.Controls.Add(this.ProtocolEnabledLabel);
             this.Controls.Add(this.OffGrayPictureBox);
+            this.Controls.Add(this.UpdateButton);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -252,6 +283,8 @@
         private System.Windows.Forms.Label DownloadPathLabel;
         private System.Windows.Forms.PictureBox ProtocolStatusPictureBox;
         private System.Windows.Forms.PictureBox OffGrayPictureBox;
-        private System.Windows.Forms.Button GuideButton;
+        private System.Windows.Forms.Button BookmarkGuideButton;
+        private System.Windows.Forms.ToolTip ProtocolToolTip;
+        private System.Windows.Forms.CheckBox AutoCloseCommandWindowCheckBox;
     }
 }

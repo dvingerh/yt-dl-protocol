@@ -49,9 +49,11 @@
             this.BookmarkletRichTextBox.ShowSelectionMargin = true;
             this.BookmarkletRichTextBox.Size = new System.Drawing.Size(442, 132);
             this.BookmarkletRichTextBox.TabIndex = 0;
-            this.BookmarkletRichTextBox.Text = "";
+            this.BookmarkletRichTextBox.Text = "javascript:(function(){\n    var currentURL=window.location.href;\n    var ytdlURL=" +
+    "\'ytdl://\'+currentURL;\n    window.open(ytdlURL,\'_self\');\n})();";
             this.BookmarkletRichTextBox.WordWrap = false;
             this.BookmarkletRichTextBox.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
+            this.BookmarkletRichTextBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BookmarkletRichTextBox_MouseDown);
             // 
             // InstructionsLabel
             // 

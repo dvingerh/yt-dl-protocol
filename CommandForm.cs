@@ -29,7 +29,7 @@ namespace yt_dl_protocol
         }
 
 
-        private void BeginCommand(string protocolUrl)
+        private async void BeginCommand(string protocolUrl)
         {
 
             // Remove the custom "ytdl://" scheme from the URL
@@ -121,6 +121,11 @@ namespace yt_dl_protocol
                                 Text = $"youtube-dl-protocol - done";
                     CommandProgressBar.Value = 100;
                 }));
+            }
+            if (Properties.Settings.Default.autoclose_on_finish)
+            {
+                await Task.Delay(2000);
+                Close();
             }
         }
 

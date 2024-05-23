@@ -17,7 +17,11 @@ namespace yt_dl_protocol
             bool isRegistered = Utils.IsProtocolRegistered(Settings.Default.protocol_ytdl);
             bool isValidYtDlPath = File.Exists(Settings.Default.ytdl_path);
 
-            if (!isValidYtDlPath)
+            YtDlDownloadPathTextBox.Text = Settings.Default.ytdl_path;
+            DownloadPathTextBox.Text = Settings.Default.download_path;
+            UpdateButton.Enabled = isValidYtDlPath;
+
+            if (!isValidYtDlPath  || !Directory.Exists(DownloadPathTextBox.Text))
             {
                 RegisterButton.Enabled = false;
                 UnregisterButton.Enabled = false;
@@ -33,12 +37,21 @@ namespace yt_dl_protocol
                 UnregisterButton.Enabled = false;
             }
 
-            UpdateButton.Enabled = isValidYtDlPath;
-            YtDlDownloadPathTextBox.Text = Settings.Default.ytdl_path;
+            if (File.Exists(Settings.Default.ytdl_path))
+            {
+                ProtocolStatusPictureBox.Image = isRegistered ? Resources.success : Resources.error;
+                ProtocolStatusPictureBox.Cursor = Cursors.Default;
+                ProtocolEnabledLabel.Cursor = Cursors.Default;
+            }
+            else
+            {
+                ProtocolStatusPictureBox.Image = Resources.pending;
+                ProtocolStatusPictureBox.Cursor = Cursors.Help;
+                ProtocolEnabledLabel.Cursor = Cursors.Help;
+            }
 
-            DownloadPathTextBox.Text = Settings.Default.download_path;
+            AutoCloseCommandWindowCheckBox.Checked = Settings.Default.autoclose_on_finish;
 
-            ProtocolStatusPictureBox.Image = isRegistered ? Resources.success : Resources.error;
         }
 
         private void BrowseButton_Click(object sender, EventArgs e)
@@ -97,8 +110,10 @@ namespace yt_dl_protocol
 
         private void SaveSettings()
         {
+            Settings.Default.autoclose_on_finish = AutoCloseCommandWindowCheckBox.Checked;
             Settings.Default.Save();
             Settings.Default.Reload();
+
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
@@ -111,7 +126,6 @@ namespace yt_dl_protocol
             else
             {
                 SaveSettings();
-                Close();
             }
         }
 
@@ -149,6 +163,28 @@ namespace yt_dl_protocol
         private void Guide_Button_Click(object sender, EventArgs e)
         {
             new InstructionForm().ShowDialog();  
+        }
+
+        private void ProtocolStatusPictureBox_BackgroundImageChanged(object sender, EventArgs e)
+        {
+            if (ProtocolStatusPictureBox.BackgroundImage == Properties.Resources.pending)
+            {
+                if (File.Exists(Settings.Default.ytdl_path))
+                {
+                    ProtocolStatusPictureBox.Cursor = Cursors.Default;
+                    ProtocolEnabledLabel.Cursor = Cursors.Default;
+                }
+                else
+                {
+                    ProtocolStatusPictureBox.Cursor = Cursors.Help;
+                    ProtocolEnabledLabel.Cursor = Cursors.Help;
+                }
+            }
+            else
+            {
+                ProtocolStatusPictureBox.Cursor = Cursors.Default;
+                ProtocolEnabledLabel.Cursor = Cursors.Default;
+            }
         }
     }
 }
