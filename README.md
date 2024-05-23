@@ -10,8 +10,8 @@ This little project is still in its early stages and any contributions (no money
 
 ## Requirements
 - Tested on Windows 10 with .NET Framework 4.8.1.
-- An FFmpeg.exe file.
-- Administrator privileges (changes will be made to the computer registry)
+- An youtube-dl.exe file. (available from [here](https://github.com/yt-dlp/yt-dlp))
+- Administrator privileges (changes will be made to the computer registry which is required to register the protocol)
 
 ## Features
 - **List of Support**: Given that this tool relies on [youtube-dlp](youtube-dlp), there are hundreds of sites which (in theory) this tool should also.
