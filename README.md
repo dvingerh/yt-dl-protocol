@@ -26,7 +26,7 @@ This little project is still in its early stages and any contributions (no money
 1. Download the latest version from the [Releases](Releases) page.
 2. Save the file to a permanent location. I cannot be moved or named (unless you wish to unregister the protocol).
 3. This software requires access to the system registry. Therefore it has to be run as an Administrator.
-4. 
+
 ### Bookmarklet
 
 1. Create a new bookmark in your web browser.
