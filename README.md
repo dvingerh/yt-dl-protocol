@@ -16,18 +16,10 @@ This little project is still in its early stages and any contributions (no money
 ## Features
 - **List of Support**: Given that this tool relies on [youtube-dlp](youtube-dlp), there are hundreds of sites which (in theory) this tool should also support.
 - **Instant Downloads**: Easily download media content supported by `youtube-dlp` by clicking the bookmarklet.
-- **Simple Setup**: Enable the `ytdl://` protocol within the utility and add the bookmarklet to your browser's bookmarks bar. That's all.
+- **Simple Setup**: Register the `ytdl://` protocol within the utility and add the bookmarklet to your browser's bookmarks bar. That's all.
 - **No Background Processes**: The application runs only when needed, ensuring efficient use of system resources.
 
 ## Installation
-
-### C# Backend
-
-1. Download the latest version from the [Releases](Releases) page.
-2. Save the file to a permanent location. I cannot be moved or named (unless you wish to unregister the protocol).
-3. This software requires access to the system registry. Therefore it has to be run as an Administrator.
-
-### Bookmarklet
 
 1. Create a new bookmark in your web browser.
 2. Name the bookmark something memorable, like `Download with yt-dl`.
@@ -39,6 +31,7 @@ This little project is still in its early stages and any contributions (no money
 
 4. Paste the copied JavaScript code into the URL or "Location" field of the bookmark.
 5. Save the bookmark.
+6. Lastly, ensure you have registered the protocol within the utility's interface. You can access the interface by simply opening the executable the way you would any other file.
 
 ## Screenshots and Usage
 
