@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigurationForm));
             this.ProtocolStatusLabel = new System.Windows.Forms.Label();
             this.ytdlPathLabel = new System.Windows.Forms.Label();
             this.YtDlDownloadPathTextBox = new System.Windows.Forms.TextBox();
@@ -42,7 +43,7 @@
             this.DownloadPathLabel = new System.Windows.Forms.Label();
             this.ProtocolStatusPictureBox = new System.Windows.Forms.PictureBox();
             this.OffGrayPictureBox = new System.Windows.Forms.PictureBox();
-            this.BookmarkGuideButton = new System.Windows.Forms.Button();
+            this.BookmarkletGuideButton = new System.Windows.Forms.Button();
             this.ProtocolToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.AutoCloseCommandWindowCheckBox = new System.Windows.Forms.CheckBox();
             this.AdditionalArgsTextBox = new System.Windows.Forms.TextBox();
@@ -98,13 +99,13 @@
             this.SaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.SaveButton.Enabled = false;
             this.SaveButton.Image = global::yt_dl_protocol.Properties.Resources.rules;
-            this.SaveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.SaveButton.Location = new System.Drawing.Point(12, 227);
             this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(125, 35);
+            this.SaveButton.Size = new System.Drawing.Size(171, 35);
             this.SaveButton.TabIndex = 10;
-            this.SaveButton.Text = "Save Settings";
+            this.SaveButton.Text = "Save settings";
             this.SaveButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.SaveButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.SaveButton.UseVisualStyleBackColor = true;
             this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
@@ -118,6 +119,7 @@
             this.UpdateButton.Size = new System.Drawing.Size(30, 25);
             this.UpdateButton.TabIndex = 8;
             this.UpdateButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.ProtocolToolTip.SetToolTip(this.UpdateButton, "Check for a new version of youtube-dl.");
             this.UpdateButton.UseVisualStyleBackColor = true;
             this.UpdateButton.Visible = false;
             this.UpdateButton.Click += new System.EventHandler(this.CheckForUpdatesButton_Click);
@@ -181,7 +183,7 @@
             // 
             this.ProtocolStatusPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ProtocolStatusPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ProtocolStatusPictureBox.Image = global::yt_dl_protocol.Properties.Resources.pending;
+            this.ProtocolStatusPictureBox.Image = global::yt_dl_protocol.Properties.Resources.error;
             this.ProtocolStatusPictureBox.Location = new System.Drawing.Point(540, 13);
             this.ProtocolStatusPictureBox.Name = "ProtocolStatusPictureBox";
             this.ProtocolStatusPictureBox.Size = new System.Drawing.Size(28, 28);
@@ -204,26 +206,27 @@
             this.OffGrayPictureBox.TabIndex = 15;
             this.OffGrayPictureBox.TabStop = false;
             // 
-            // BookmarkGuideButton
+            // BookmarkletGuideButton
             // 
-            this.BookmarkGuideButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BookmarkGuideButton.Image = global::yt_dl_protocol.Properties.Resources.info;
-            this.BookmarkGuideButton.Location = new System.Drawing.Point(420, 227);
-            this.BookmarkGuideButton.Name = "BookmarkGuideButton";
-            this.BookmarkGuideButton.Size = new System.Drawing.Size(150, 35);
-            this.BookmarkGuideButton.TabIndex = 11;
-            this.BookmarkGuideButton.Text = "Bookmark Guide";
-            this.BookmarkGuideButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.BookmarkGuideButton.UseVisualStyleBackColor = true;
-            this.BookmarkGuideButton.Click += new System.EventHandler(this.Guide_Button_Click);
+            this.BookmarkletGuideButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BookmarkletGuideButton.Image = global::yt_dl_protocol.Properties.Resources.info;
+            this.BookmarkletGuideButton.Location = new System.Drawing.Point(399, 227);
+            this.BookmarkletGuideButton.Name = "BookmarkletGuideButton";
+            this.BookmarkletGuideButton.Size = new System.Drawing.Size(171, 35);
+            this.BookmarkletGuideButton.TabIndex = 11;
+            this.BookmarkletGuideButton.Text = "Bookmarklet guide";
+            this.BookmarkletGuideButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.BookmarkletGuideButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.BookmarkletGuideButton.UseVisualStyleBackColor = true;
+            this.BookmarkletGuideButton.Click += new System.EventHandler(this.Guide_Button_Click);
             // 
             // ProtocolToolTip
             // 
             this.ProtocolToolTip.AutomaticDelay = 0;
+            this.ProtocolToolTip.AutoPopDelay = 5000;
             this.ProtocolToolTip.BackColor = System.Drawing.Color.White;
-            this.ProtocolToolTip.IsBalloon = true;
-            this.ProtocolToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.ProtocolToolTip.ToolTipTitle = "Registering the protocol";
+            this.ProtocolToolTip.InitialDelay = 0;
+            this.ProtocolToolTip.ReshowDelay = 0;
             this.ProtocolToolTip.UseAnimation = false;
             this.ProtocolToolTip.UseFading = false;
             // 
@@ -269,7 +272,7 @@
             this.Controls.Add(this.AdditionalArgsTextBox);
             this.Controls.Add(this.AdditionalArgsLabel);
             this.Controls.Add(this.AutoCloseCommandWindowCheckBox);
-            this.Controls.Add(this.BookmarkGuideButton);
+            this.Controls.Add(this.BookmarkletGuideButton);
             this.Controls.Add(this.ProtocolStatusPictureBox);
             this.Controls.Add(this.BrowseDownloadPathButton);
             this.Controls.Add(this.DownloadPathTextBox);
@@ -286,13 +289,14 @@
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ConfigurationForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "youtube-dl-protocol - configuration";
+            this.Text = "yt-dl-protocol - configuration";
             this.Load += new System.EventHandler(this.ConfigurationForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ProtocolStatusPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.OffGrayPictureBox)).EndInit();
@@ -315,7 +319,7 @@
         private System.Windows.Forms.Label DownloadPathLabel;
         private System.Windows.Forms.PictureBox ProtocolStatusPictureBox;
         private System.Windows.Forms.PictureBox OffGrayPictureBox;
-        private System.Windows.Forms.Button BookmarkGuideButton;
+        private System.Windows.Forms.Button BookmarkletGuideButton;
         private System.Windows.Forms.ToolTip ProtocolToolTip;
         private System.Windows.Forms.CheckBox AutoCloseCommandWindowCheckBox;
         private System.Windows.Forms.TextBox AdditionalArgsTextBox;

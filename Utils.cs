@@ -1,12 +1,36 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Diagnostics;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace yt_dl_protocol
 {
     public static class Utils
     {
+
+        public static bool ValidateExecutableIsYtDl(string executable)
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                FileName = executable,
+                Arguments = $" --version",
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            using (Process process = new Process { StartInfo = startInfo })
+            {
+                process.Start();
+                string output = process.StandardOutput.ReadToEnd() + process.StandardError.ReadToEnd();
+                process.WaitForExit();
+
+                return Regex.IsMatch(output, @"\b\d{4}\.\d{2}\.\d{2}\b");
+            }
+        }
         public static bool RegisterURLProtocol(string protocol, string applicationPath, string description, bool silent= true)
         {
             try

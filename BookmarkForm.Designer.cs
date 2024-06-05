@@ -113,7 +113,7 @@
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "youtube-dl-protocol - bookmark guide";
+            this.Text = "yt-dl-protocol - bookmark guide";
             this.Load += new System.EventHandler(this.InstructionForm_Load);
             this.CopyContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);

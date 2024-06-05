@@ -35,17 +35,20 @@ namespace yt_dl_protocol
             if (canRegister)
             {
                 SaveButton.Enabled = canRegister;
-                //RegisterButton.Enabled = !isRegistered;
-                //UnregisterButton.Enabled = isRegistered;
-
-                ProtocolStatusPictureBox.Image = isRegistered ? Resources.success : Resources.error;
+                RegisterButton.Enabled = !isRegistered;
+                UnregisterButton.Enabled = isRegistered;
+                UpdateButton.Visible = true;
+                ProtocolStatusPictureBox.Image = isRegistered ? Resources.success : Resources.warning;
                 ProtocolStatusPictureBox.Cursor = Cursors.Default;
+                ProtocolToolTip.SetToolTip(ProtocolStatusPictureBox, isRegistered ? "The protocol has currently been registered." : "The protocol has currently not been registered.");
                 ProtocolStatusLabel.Cursor = Cursors.Default;
             }
             else
             {
-                ProtocolStatusPictureBox.Image = Resources.pending;
+                UpdateButton.Visible = false;
+                ProtocolStatusPictureBox.Image = Resources.error;
                 ProtocolStatusPictureBox.Cursor = Cursors.Help;
+                ProtocolToolTip.SetToolTip(ProtocolStatusPictureBox, "You need to set up the required paths below before you can register the protocol." );
                 ProtocolStatusLabel.Cursor = Cursors.Help;
             }
         }
@@ -61,7 +64,7 @@ namespace yt_dl_protocol
                 CheckPathExists = true
             };
             DialogResult result = openFileDialog.ShowDialog();
-            if (result == DialogResult.OK && File.Exists(openFileDialog.FileName))
+            if (result == DialogResult.OK && File.Exists(openFileDialog.FileName) && Utils.ValidateExecutableIsYtDl(openFileDialog.FileName))
             {
                 YtDlDownloadPathTextBox.Text = openFileDialog.FileName;
                 Settings.Default.ytdl_path = YtDlDownloadPathTextBox.Text;
@@ -90,7 +93,7 @@ namespace yt_dl_protocol
         {
             if (register)
             {
-                Settings.Default.protocol_registered = Utils.RegisterURLProtocol("ytdl", Application.ExecutablePath, "youtube-dl-protocol-handler");
+                Settings.Default.protocol_registered = Utils.RegisterURLProtocol("ytdl", Application.ExecutablePath, "yt-dl-protocol-handler");
                 UnregisterButton.Enabled = true;
                 RegisterButton.Enabled = false;
             }
@@ -101,7 +104,7 @@ namespace yt_dl_protocol
                 RegisterButton.Enabled = true;
             }
             bool isRegistered = Utils.IsProtocolRegistered(Settings.Default.protocol_ytdl);
-            ProtocolStatusPictureBox.Image = isRegistered ? Resources.success : Resources.error;
+            ProtocolStatusPictureBox.Image = isRegistered ? Resources.success : Resources.warning;
             SaveSettings();
         }
 
@@ -167,7 +170,7 @@ namespace yt_dl_protocol
 
         private void ProtocolStatusPictureBox_BackgroundImageChanged(object sender, EventArgs e)
         {
-            if (ProtocolStatusPictureBox.BackgroundImage == Properties.Resources.pending)
+            if (ProtocolStatusPictureBox.BackgroundImage == Properties.Resources.error)
             {
                 if (File.Exists(Settings.Default.ytdl_path))
                 {

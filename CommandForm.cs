@@ -34,7 +34,6 @@ namespace yt_dl_protocol
 
             string desktopPath = Directory.Exists(Settings.Default.download_path) ? Settings.Default.download_path : Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string command = "";
-            //string nameCommand = $" --quiet --ignore-errors --no-warnings --get-filename  --no-overwrites {protocolUrl} -o \"{desktopPath}\\%(title)s.%(ext)s\"";
             string customOptions = Settings.Default.additional_args;
 
             if (protocolUrl == "-U")
@@ -43,7 +42,7 @@ namespace yt_dl_protocol
             }
             else
             {
-                command = $"  --no-overwrites -no-post-overwrites --newline {(string.IsNullOrEmpty(customOptions) ? string.Empty : customOptions)} {protocolUrl} -o \"{desktopPath}\\%(title)s.%(ext)s\"";
+                command = $" --no-overwrites --no-post-overwrites --newline {(string.IsNullOrEmpty(customOptions) ? string.Empty : customOptions)} \"{protocolUrl}\"";
             }
             Invoke(new Action(() =>
             {
@@ -58,6 +57,7 @@ namespace yt_dl_protocol
                 ytdlProcess.StartInfo.RedirectStandardOutput = true;
                 ytdlProcess.StartInfo.RedirectStandardError = true;
                 ytdlProcess.StartInfo.CreateNoWindow = true;
+                ytdlProcess.StartInfo.WorkingDirectory = desktopPath;
 
                 ytdlProcess.OutputDataReceived += (sender, e) =>
                 {
@@ -71,11 +71,11 @@ namespace yt_dl_protocol
                             {
                                 DownloadProgressBar.Style = ProgressBarStyle.Continuous;
                                 DownloadProgressBar.Value = (int)Math.Round(progress.Value);
-                                Text = $"youtube-dl-protocol - downloaded {progress.Value}%";
+                                Text = $"yt-dl-protocol - downloaded {progress.Value}%";
                             }
                             else
                             {
-                                Text = $"youtube-dl-protocol - processing files...";
+                                Text = $"yt-dl-protocol - processing files...";
                             }
                         }));
                     }
@@ -110,7 +110,7 @@ namespace yt_dl_protocol
                     ControlBox = true;  // Enable the Close button after the process ends
                     isFinished = true;
                     StopOkButton.Enabled = false;
-                    Text = $"youtube-dl-protocol - done";
+                    Text = $"yt-dl-protocol - done";
                     DownloadProgressBar.Value = 100;
                     DownloadProgressBar.Style = ProgressBarStyle.Continuous;
                     if (Settings.Default.autoclose_on_finish)

@@ -100,7 +100,7 @@
             this.Name = "CommandForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "youtube-dl-protocol - pending";
+            this.Text = "yt-dl-protocol - pending";
             this.ResumeLayout(false);
             this.PerformLayout();
 

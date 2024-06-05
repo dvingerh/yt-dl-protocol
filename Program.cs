@@ -18,7 +18,7 @@ namespace yt_dl_protocol
                 switch (arg)
                 {
                     case "register":
-                        Utils.RegisterURLProtocol("ytdl", Application.ExecutablePath, "youtube-dl-protocol-handler");
+                        Utils.RegisterURLProtocol("ytdl", Application.ExecutablePath, "yt-dl-protocol-handler");
                         break;
                     case "unregister":
                         Utils.UnregisterURLProtocol("ytdl");
