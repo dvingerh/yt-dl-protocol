@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace yt_dl_protocol
@@ -37,11 +38,33 @@ namespace yt_dl_protocol
 
         public static bool IsProtocolRegistered(string protocol)
         {
+            string applicationPath = Assembly.GetExecutingAssembly().Location;
             try
             {
                 using (RegistryKey key = Registry.ClassesRoot.OpenSubKey(protocol))
                 {
-                    return key != null;
+                    if (key == null)
+                    {
+                        return false;
+                    }
+
+                    using (RegistryKey shellKey = key.OpenSubKey(@"shell\open\command"))
+                    {
+                        if (shellKey == null)
+                        {
+                            return false;
+                        }
+
+                        string registeredApplicationPath = shellKey.GetValue(string.Empty) as string;
+                        if (registeredApplicationPath == null)
+                        {
+                            return false;
+                        }
+
+                        registeredApplicationPath = registeredApplicationPath.Replace("\"%1\"", "").Trim('\"', ' ');
+
+                        return string.Equals(registeredApplicationPath, applicationPath, StringComparison.OrdinalIgnoreCase);
+                    }
                 }
             }
             catch (Exception ex)

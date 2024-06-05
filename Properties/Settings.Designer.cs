@@ -82,5 +82,17 @@ namespace yt_dl_protocol.Properties {
                 this["autoclose_on_finish"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string additional_args {
+            get {
+                return ((string)(this["additional_args"]));
+            }
+            set {
+                this["additional_args"] = value;
+            }
+        }
     }
 }

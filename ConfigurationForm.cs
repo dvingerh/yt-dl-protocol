@@ -14,44 +14,40 @@ namespace yt_dl_protocol
 
         private void ConfigurationForm_Load(object sender, EventArgs e)
         {
-            bool isRegistered = Utils.IsProtocolRegistered(Settings.Default.protocol_ytdl);
-            bool isValidYtDlPath = File.Exists(Settings.Default.ytdl_path);
-
             YtDlDownloadPathTextBox.Text = Settings.Default.ytdl_path;
             DownloadPathTextBox.Text = Settings.Default.download_path;
+            AdditionalArgsTextBox.Text = Settings.Default.additional_args;
+
+            AutoCloseCommandWindowCheckBox.Checked = Settings.Default.autoclose_on_finish;
+            UpdateCanRegisterState();
+        }
+
+        private void UpdateCanRegisterState()
+        {
+            bool isRegistered = Utils.IsProtocolRegistered(Settings.Default.protocol_ytdl);
+            bool isValidYtDlPath = File.Exists(Settings.Default.ytdl_path) || File.Exists(YtDlDownloadPathTextBox.Text);
+            bool isValidDlPath = Directory.Exists(Settings.Default.download_path) || Directory.Exists(DownloadPathTextBox.Text);
+
+            bool canRegister = isValidYtDlPath && isValidDlPath;
+
             UpdateButton.Enabled = isValidYtDlPath;
 
-            if (!isValidYtDlPath  || !Directory.Exists(DownloadPathTextBox.Text))
+            if (canRegister)
             {
-                RegisterButton.Enabled = false;
-                UnregisterButton.Enabled = false;
-            }
-            else if (isRegistered)
-            {
-                RegisterButton.Enabled = false;
-                UnregisterButton.Enabled = true;
-            }
-            else
-            {
-                RegisterButton.Enabled = true;
-                UnregisterButton.Enabled = false;
-            }
+                SaveButton.Enabled = canRegister;
+                //RegisterButton.Enabled = !isRegistered;
+                //UnregisterButton.Enabled = isRegistered;
 
-            if (File.Exists(Settings.Default.ytdl_path))
-            {
                 ProtocolStatusPictureBox.Image = isRegistered ? Resources.success : Resources.error;
                 ProtocolStatusPictureBox.Cursor = Cursors.Default;
-                ProtocolEnabledLabel.Cursor = Cursors.Default;
+                ProtocolStatusLabel.Cursor = Cursors.Default;
             }
             else
             {
                 ProtocolStatusPictureBox.Image = Resources.pending;
                 ProtocolStatusPictureBox.Cursor = Cursors.Help;
-                ProtocolEnabledLabel.Cursor = Cursors.Help;
+                ProtocolStatusLabel.Cursor = Cursors.Help;
             }
-
-            AutoCloseCommandWindowCheckBox.Checked = Settings.Default.autoclose_on_finish;
-
         }
 
         private void BrowseButton_Click(object sender, EventArgs e)
@@ -70,13 +66,14 @@ namespace yt_dl_protocol
                 YtDlDownloadPathTextBox.Text = openFileDialog.FileName;
                 Settings.Default.ytdl_path = YtDlDownloadPathTextBox.Text;
                 UpdateButton.Enabled = true;
-                SaveSettings();
             }
             else
             {
                 MessageBox.Show("The provided file is invalid.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 UpdateButton.Enabled = false;
             }
+
+            UpdateCanRegisterState();
         }
 
         private void RegisterButton_Click(object sender, EventArgs e)
@@ -111,22 +108,26 @@ namespace yt_dl_protocol
         private void SaveSettings()
         {
             Settings.Default.autoclose_on_finish = AutoCloseCommandWindowCheckBox.Checked;
+            Settings.Default.additional_args = AdditionalArgsTextBox.Text;
             Settings.Default.Save();
             Settings.Default.Reload();
+            UpdateCanRegisterState();
 
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
             if (!File.Exists(YtDlDownloadPathTextBox.Text) || !Directory.Exists(DownloadPathTextBox.Text))
-            {
                 MessageBox.Show("The settings could not be saved due to one or more invalid paths.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
             else
             {
                 SaveSettings();
+                MessageBox.Show("The settings have been saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+
+            bool isRegistered = Utils.IsProtocolRegistered(Settings.Default.protocol_ytdl);
+            RegisterButton.Enabled = !isRegistered;
+            UnregisterButton.Enabled = isRegistered;
         }
 
         private void CheckForUpdatesButton_Click(object sender, EventArgs e)
@@ -150,19 +151,18 @@ namespace yt_dl_protocol
             {
                 DownloadPathTextBox.Text = selectFolderDialog.SelectedPath;
                 Settings.Default.download_path = DownloadPathTextBox.Text;
-                SaveButton.Enabled = true;
-                SaveSettings();
             }
             else
             {
                 MessageBox.Show("The provided directory is invalid.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                SaveButton.Enabled = false;
             }
+
+            UpdateCanRegisterState();
         }
 
         private void Guide_Button_Click(object sender, EventArgs e)
         {
-            new InstructionForm().ShowDialog();  
+            new BookmarkForm().ShowDialog();  
         }
 
         private void ProtocolStatusPictureBox_BackgroundImageChanged(object sender, EventArgs e)
@@ -172,18 +172,18 @@ namespace yt_dl_protocol
                 if (File.Exists(Settings.Default.ytdl_path))
                 {
                     ProtocolStatusPictureBox.Cursor = Cursors.Default;
-                    ProtocolEnabledLabel.Cursor = Cursors.Default;
+                    ProtocolStatusLabel.Cursor = Cursors.Default;
                 }
                 else
                 {
                     ProtocolStatusPictureBox.Cursor = Cursors.Help;
-                    ProtocolEnabledLabel.Cursor = Cursors.Help;
+                    ProtocolStatusLabel.Cursor = Cursors.Help;
                 }
             }
             else
             {
                 ProtocolStatusPictureBox.Cursor = Cursors.Default;
-                ProtocolEnabledLabel.Cursor = Cursors.Default;
+                ProtocolStatusLabel.Cursor = Cursors.Default;
             }
         }
     }

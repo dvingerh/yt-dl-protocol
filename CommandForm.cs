@@ -25,27 +25,25 @@ namespace yt_dl_protocol
 
         private void CommandForm_Shown(object sender, EventArgs e)
         {
-            Task.Run(() => BeginCommand(url)); // Start download on a background thread
+            Task.Run(() => BeginCommand(url));
         }
 
 
-        private async void BeginCommand(string protocolUrl)
+        private void BeginCommand(string protocolUrl, string customArgs="")
         {
 
-            // Remove the custom "ytdl://" scheme from the URL
             string desktopPath = Directory.Exists(Settings.Default.download_path) ? Settings.Default.download_path : Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string command = "";
-            string nameCommand = $" --quiet --ignore-errors --no-warnings --get-filename {protocolUrl} -o \"{desktopPath}\\%(title)s.%(ext)s\"";
-            //string outputPath = await Task.Run(() => ExtractFilePath(nameCommand));
-            // Construct the command ensuring the URL is enclosed in quotes to handle any special characters
+            //string nameCommand = $" --quiet --ignore-errors --no-warnings --get-filename  --no-overwrites {protocolUrl} -o \"{desktopPath}\\%(title)s.%(ext)s\"";
+            string customOptions = Settings.Default.additional_args;
+
             if (protocolUrl == "-U")
             {
                 command = $" -U";
             }
             else
             {
-                command = $" --newline {protocolUrl} -o \"{desktopPath}\\%(title)s.%(ext)s\"";
-
+                command = $"  --no-overwrites -no-post-overwrites --newline {(string.IsNullOrEmpty(customOptions) ? string.Empty : customOptions)} {protocolUrl} -o \"{desktopPath}\\%(title)s.%(ext)s\"";
             }
             Invoke(new Action(() =>
             {
@@ -56,12 +54,11 @@ namespace yt_dl_protocol
             {
                 ytdlProcess.StartInfo.FileName = $"{ytdlPath}";
                 ytdlProcess.StartInfo.Arguments = $" {command} ";
-                ytdlProcess.StartInfo.UseShellExecute = false;
+                ytdlProcess.StartInfo.UseShellExecute = false; 
                 ytdlProcess.StartInfo.RedirectStandardOutput = true;
                 ytdlProcess.StartInfo.RedirectStandardError = true;
                 ytdlProcess.StartInfo.CreateNoWindow = true;
 
-                // Output and error handling
                 ytdlProcess.OutputDataReceived += (sender, e) =>
                 {
                     if (e.Data != null)
@@ -72,15 +69,12 @@ namespace yt_dl_protocol
                             decimal? progress = ExtractProgress(e.Data);
                             if (progress.HasValue && progress != -1)
                             {
-                                CommandProgressBar.Value = (int)Math.Round(progress.Value);
-                                CommandProgressLabel.Text = $"{progress.Value}%";
-                                CommandProgressBar.Style = ProgressBarStyle.Continuous;
+                                DownloadProgressBar.Style = ProgressBarStyle.Continuous;
+                                DownloadProgressBar.Value = (int)Math.Round(progress.Value);
                                 Text = $"youtube-dl-protocol - downloaded {progress.Value}%";
                             }
                             else
                             {
-                                CommandProgressBar.Style = ProgressBarStyle.Marquee;
-                                CommandProgressBar.MarqueeAnimationSpeed = 1;
                                 Text = $"youtube-dl-protocol - processing files...";
                             }
                         }));
@@ -105,7 +99,7 @@ namespace yt_dl_protocol
 
                 ytdlProcess.WaitForExit();  // Wait for the process to complete
 
-                Invoke(new Action(() =>
+                Invoke(new Action(async () =>
                 {
                     CommandOutputTextBox.AppendText(Environment.NewLine + Environment.NewLine + "The command has has finished running.");
                     if (command == "-U")
@@ -115,21 +109,26 @@ namespace yt_dl_protocol
                     }
                     ControlBox = true;  // Enable the Close button after the process ends
                     isFinished = true;
-                    EndButton.Enabled = false;
-                    CommandProgressLabel.Text = "100%";
-                    CommandProgressBar.Style = ProgressBarStyle.Continuous;
-                                Text = $"youtube-dl-protocol - done";
-                    CommandProgressBar.Value = 100;
+                    StopOkButton.Enabled = false;
+                    Text = $"youtube-dl-protocol - done";
+                    DownloadProgressBar.Value = 100;
+                    DownloadProgressBar.Style = ProgressBarStyle.Continuous;
+                    if (Settings.Default.autoclose_on_finish)
+                    {
+                        await Task.Delay(2000);
+                        Close();
+                    }
+                    else
+                    {
+                        StopOkButton.Enabled = true;
+                        StopOkButton.Text = "Close";
+                        StopOkButton.Image = Resources.success;
+                    }
                 }));
-            }
-            if (Properties.Settings.Default.autoclose_on_finish)
-            {
-                await Task.Delay(2000);
-                Close();
             }
         }
 
-    private decimal? ExtractProgress(string input)
+        private static decimal ExtractProgress(string input)
         {
             string pattern = @"\[download\]\s+([\d.,]+)%\s+of";
 
@@ -137,12 +136,9 @@ namespace yt_dl_protocol
             if (match.Success)
             {
                 string progress = match.Groups[1].Value;
-
-                // Replace commas with dots if necessary
                 progress = progress.Replace(',', '.');
 
-                // Try to parse the sanitized string to a float
-                if (decimal.TryParse(progress, NumberStyles.Float, CultureInfo.InvariantCulture, out decimal progressValue))
+                if (decimal.TryParse(progress, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal progressValue))
                 {
                     return progressValue;
                 }
@@ -152,27 +148,22 @@ namespace yt_dl_protocol
         }
 
 
-        private void EndButton_Click(object sender, EventArgs e)
+        private void StopOkButon_Click(object sender, EventArgs e)
         {
+            if (isFinished) Close();
             try
             {
-                foreach (var item in Process.GetProcessesByName(Path.GetFileName(Settings.Default.ytdl_path)))
+                foreach (var item in Process.GetProcessesByName(Path.GetFileNameWithoutExtension(Settings.Default.ytdl_path)))
                 {
-                    item.Kill(); // Eh? Maybe zombie processes by improperly handing their shut down
+                    item.Kill();
                 }
-                //Environment.Exit(1);
             }
             catch (Exception)
             {
-
                 Invoke(new Action(() =>
                 {
                     CommandOutputTextBox.AppendText(Environment.NewLine + Environment.NewLine + "The process could not be killed: " + e.ToString());
                 }));
-            }
-            finally
-            {
-                ControlBox = true;
             }
         }
     }

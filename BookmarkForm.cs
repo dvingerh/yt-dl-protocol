@@ -5,9 +5,9 @@ using System.Windows.Forms;
 
 namespace yt_dl_protocol
 {
-    public partial class InstructionForm : Form
+    public partial class BookmarkForm : Form
     {
-        public InstructionForm()
+        public BookmarkForm()
         {
             InitializeComponent();
         }
@@ -19,6 +19,8 @@ namespace yt_dl_protocol
         private Color variableColor = Color.FromArgb(131, 165, 152);
         private Color objectMethodColor = Color.FromArgb(142, 192, 124);
         private Color stringColor = Color.FromArgb(184, 187, 38);
+
+        private string jsCode = "javascript:(function(){\r\n    var currentURL=window.location.href;\r\n    var ytdlURL='ytdl://'+currentURL;\r\n    window.open(ytdlURL,'_self');\r\n})();";
         private void Document_MouseDown(object sender, HtmlElementEventArgs e)
         {
             e.ReturnValue = false;
@@ -27,7 +29,7 @@ namespace yt_dl_protocol
         private void InstructionForm_Load(object sender, EventArgs e)
         {
             ApplySyntaxHighlighting();
-            BookmarkletRichTextBox.Text = "javascript:(function(){\r\n    var currentURL=window.location.href;\r\n    var ytdlURL='ytdl://'+currentURL;\r\n    window.open(ytdlURL,'_self');\r\n})();\r\n";
+            BookmarkletRichTextBox.Text = jsCode;
         }
 
         private void ApplySyntaxHighlighting()
@@ -47,6 +49,7 @@ namespace yt_dl_protocol
             BookmarkletRichTextBox.SelectionStart = selectionStart;
             BookmarkletRichTextBox.SelectionLength = selectionLength;
             BookmarkletRichTextBox.SelectionColor = foregroundColor;
+
         }
 
         private void HighlightPattern(string pattern, Color color)
@@ -64,12 +67,26 @@ namespace yt_dl_protocol
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
             ApplySyntaxHighlighting();
-
         }
 
         private void BookmarkletRichTextBox_MouseDown(object sender, MouseEventArgs e)
         {
             BookmarkletRichTextBox.SelectAll();
+        }
+
+        private void BookmarkletRichTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void BookmarkletRichTextBox_MouseLeave(object sender, EventArgs e)
+        {
+            BookmarkletRichTextBox.DeselectAll();
+        }
+
+        private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(jsCode);
         }
     }
 }
