@@ -37,13 +37,13 @@ This little project is still in its early stages and any contributions (no money
 
 https://github.com/dvingerh/yt-dl-protocol/assets/8366383/7102c351-7ad0-4144-be48-7679c61c9f55
 
-![image](https://github.com/dvingerh/yt-dl-protocol/assets/8366383/ada4247c-81f4-432c-9dc9-02269d075a1e)
+![image](https://raw.githubusercontent.com/dvingerh/yt-dl-protocol/main/AppImages/1.png)
 
 
-![image](https://github.com/dvingerh/yt-dl-protocol/assets/8366383/d8f98d79-7469-4c0d-bae2-54480055ad50)
+![image](https://raw.githubusercontent.com/dvingerh/yt-dl-protocol/main/AppImages/2.png)
 
 
-![image](https://github.com/dvingerh/yt-dl-protocol/assets/8366383/3a0148ad-2ec7-4ae7-8280-376cbd0e053e)
+![image](https://raw.githubusercontent.com/dvingerh/yt-dl-protocol/main/AppImages/3.png)
 
 
 
