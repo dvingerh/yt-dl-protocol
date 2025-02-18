@@ -40,21 +40,23 @@
             // BookmarkletRichTextBox
             // 
             this.BookmarkletRichTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(48)))), ((int)(((byte)(43)))));
-            this.BookmarkletRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.BookmarkletRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.BookmarkletRichTextBox.ContextMenuStrip = this.CopyContextMenu;
             this.BookmarkletRichTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.BookmarkletRichTextBox.DetectUrls = false;
-            this.BookmarkletRichTextBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.BookmarkletRichTextBox.Font = new System.Drawing.Font("Consolas", 10F);
             this.BookmarkletRichTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(219)))), ((int)(((byte)(187)))));
-            this.BookmarkletRichTextBox.Location = new System.Drawing.Point(0, 0);
+            this.BookmarkletRichTextBox.Location = new System.Drawing.Point(-1, 5);
+            this.BookmarkletRichTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.BookmarkletRichTextBox.Name = "BookmarkletRichTextBox";
             this.BookmarkletRichTextBox.ReadOnly = true;
             this.BookmarkletRichTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.BookmarkletRichTextBox.Size = new System.Drawing.Size(372, 108);
+            this.BookmarkletRichTextBox.ShortcutsEnabled = false;
+            this.BookmarkletRichTextBox.ShowSelectionMargin = true;
+            this.BookmarkletRichTextBox.Size = new System.Drawing.Size(490, 128);
             this.BookmarkletRichTextBox.TabIndex = 0;
-            this.BookmarkletRichTextBox.Text = "javascript:(function(){\nvar currentURL=window.location.href;\nvar ytdlURL=\'ytdl://" +
-    "\'+currentURL;\nwindow.open(ytdlURL,\'_self\');\n})();";
+            this.BookmarkletRichTextBox.Text = "javascript:(function(){\nvar loc = \'ytdl://\' + window.location.href;\nvar call = en" +
+    "codeURIComponent(loc);\nwindow.open(call, \'_self\');\n})();";
             this.BookmarkletRichTextBox.WordWrap = false;
             this.BookmarkletRichTextBox.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             this.BookmarkletRichTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.BookmarkletRichTextBox_KeyPress);
@@ -71,24 +73,25 @@
             this.CopyToolStripMenuItem});
             this.CopyContextMenu.Name = "CopyContextMenu";
             this.CopyContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.CopyContextMenu.Size = new System.Drawing.Size(113, 28);
+            this.CopyContextMenu.Size = new System.Drawing.Size(127, 36);
             // 
             // CopyToolStripMenuItem
             // 
             this.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem";
-            this.CopyToolStripMenuItem.Size = new System.Drawing.Size(112, 24);
+            this.CopyToolStripMenuItem.Size = new System.Drawing.Size(126, 32);
             this.CopyToolStripMenuItem.Text = "Copy";
             this.CopyToolStripMenuItem.Click += new System.EventHandler(this.CopyToolStripMenuItem_Click);
             // 
             // InstructionsLabel
             // 
             this.InstructionsLabel.AutoEllipsis = true;
-            this.InstructionsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.InstructionsLabel.BackColor = System.Drawing.Color.White;
+            this.InstructionsLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.InstructionsLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.InstructionsLabel.Location = new System.Drawing.Point(0, 108);
-            this.InstructionsLabel.Margin = new System.Windows.Forms.Padding(4);
+            this.InstructionsLabel.Location = new System.Drawing.Point(0, 129);
+            this.InstructionsLabel.Margin = new System.Windows.Forms.Padding(5);
             this.InstructionsLabel.Name = "InstructionsLabel";
-            this.InstructionsLabel.Size = new System.Drawing.Size(372, 106);
+            this.InstructionsLabel.Size = new System.Drawing.Size(488, 128);
             this.InstructionsLabel.TabIndex = 1;
             this.InstructionsLabel.Text = "Copy the above JS code and save it as a bookmarklet in your web browser. Whenever" +
     " you click it on a site with supported media, the file(s) will be downloaded aut" +
@@ -97,16 +100,17 @@
             // 
             // BookmarkForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(372, 214);
-            this.Controls.Add(this.InstructionsLabel);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(48)))), ((int)(((byte)(43)))));
+            this.ClientSize = new System.Drawing.Size(488, 257);
             this.Controls.Add(this.BookmarkletRichTextBox);
+            this.Controls.Add(this.InstructionsLabel);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "BookmarkForm";

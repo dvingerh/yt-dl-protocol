@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Windows.Forms;
 
 namespace yt_dl_protocol
@@ -13,7 +14,7 @@ namespace yt_dl_protocol
             Application.SetCompatibleTextRenderingDefault(false);
             if (args.Length > 0)
             {
-                string arg = string.Join(" ", args).Replace("ytdl://", "").Trim();
+                string arg = HttpUtility.UrlDecode(string.Join(" ", args).Replace("ytdl://", "").Trim());
 
                 switch (arg)
                 {

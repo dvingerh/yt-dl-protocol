@@ -20,7 +20,8 @@ namespace yt_dl_protocol
         private Color objectMethodColor = Color.FromArgb(142, 192, 124);
         private Color stringColor = Color.FromArgb(184, 187, 38);
 
-        private string jsCode = "javascript:(function(){\r\n    var currentURL=window.location.href;\r\n    var ytdlURL='ytdl://'+currentURL;\r\n    window.open(ytdlURL,'_self');\r\n})();";
+        private string jsCode = "javascript:(function(){window.open('ytdl://'+ encodeURIComponent(window.location.href),'_self');})();";
+
         private void Document_MouseDown(object sender, HtmlElementEventArgs e)
         {
             e.ReturnValue = false;
@@ -29,7 +30,6 @@ namespace yt_dl_protocol
         private void InstructionForm_Load(object sender, EventArgs e)
         {
             ApplySyntaxHighlighting();
-            BookmarkletRichTextBox.Text = jsCode;
         }
 
         private void ApplySyntaxHighlighting()
