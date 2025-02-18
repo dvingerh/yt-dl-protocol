@@ -22,7 +22,7 @@ Use a bookmarklet to quickly download media content from the current webpage URL
 4. Copy the following JavaScript code from here or from the utility's interface:
 
     ```javascript
-    javascript:(function(){var currentURL=window.location.href;var ytdlURL='ytdl://'+currentURL;window.open(ytdlURL,'_self');})();
+    javascript:(function(){window.open('ytdl://'+ encodeURIComponent(window.location.href),'_self');})();
     ```
 
 5. Paste the copied JavaScript code into the URL or "Location" field of the bookmarklet.
